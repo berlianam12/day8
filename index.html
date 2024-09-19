@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Line Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="myChart" width="400" height="200"></canvas>
+
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                datasets: [{
+                    label: 'Data',
+                    data: [1, 2, 3, 4, 5],
+                    borderColor: 'red',
+                    borderWidth: 2,
+                    fill: false,
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                interaction: {
+                    mode: 'point',
+                    intersect: true
+                },
+                onHover: (event, chartElement) => {
+                    if (chartElement.length > 0) {
+                        let poinAktif = chartElement[0];
+                        let index = poinAktif.index;
+                        console.log('Index yang dihover:', index);
+                    } else {
+                        console.log('Tidak ada data point yang dihover.');
+                    }
+                }
+            }
+        });
+
+        function addDataPoint() {
+            myChart.data.labels.push('Jun');
+            myChart.data.datasets[0].data.push(6);
+            myChart.update();
+        }
+
+        setTimeout(addDataPoint, 2000);
+    </script>
+</body>
+</html>
